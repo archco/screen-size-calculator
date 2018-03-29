@@ -10,7 +10,7 @@ describe('#ScreenSizeCalculator', () => {
 
     it('occurs reference error if not give any value of width, height or diagonal.', () => {
       expect(() => {
-        const screenSize = new ScreenSizeCalculator({});
+        const screenSize = new ScreenSizeCalculator();
       }).toThrowError(ReferenceError);
     });
   });
@@ -54,6 +54,30 @@ describe('#ScreenSizeCalculator', () => {
       const { width, unit } = ss.getData('inch');
       expect(unit).toEqual('inch');
       expect(width).toEqual(39.37);
+    });
+
+    it('almost same as screenSize if default arguments.', () => {
+      const ss = new ScreenSizeCalculator({ diagonal: 24 });
+      const { width } = ss.screenSize;
+      expect(ss.getData().width).toBeCloseTo(width, 2);
+    });
+  });
+
+  describe('options#aspectRatio', () => {
+    it('4:3 test.', () => {
+      const ss = new ScreenSizeCalculator({ diagonal: 19, aspectRatio: '4:3' });
+      const { width, height, diagonal} = ss.getData('inch', 1);
+      expect(diagonal).toEqual(19);
+      expect(width).toEqual(15.2);
+      expect(height).toEqual(11.4);
+    });
+
+    it('2.39:1 test.', () => {
+      const ss = new ScreenSizeCalculator({ diagonal: 32, aspectRatio: '2.39:1' });
+      const { width, height, diagonal} = ss.getData('inch', 1);
+      expect(diagonal).toEqual(32);
+      expect(width).toEqual(29.5);
+      expect(height).toEqual(12.4);
     });
   });
 });
