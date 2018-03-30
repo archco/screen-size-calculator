@@ -2,6 +2,12 @@
 
 The javascript library class for calculating screen size.
 
+## Installation
+
+``` sh
+npm install screen-size-calculator
+```
+
 ## Usage
 
 ``` js
@@ -19,4 +25,4 @@ size.getData('cm').height; // 68.49
 
 ## License
 
-The MIT License
+[The MIT License](https://github.com/archco/screen-size-calculator/blob/master/LICENSE)
