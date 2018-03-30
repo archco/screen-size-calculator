@@ -67,17 +67,6 @@ export class ScreenSizeCalculator {
     };
   }
 
-  setProperties(): void {
-    // set aspect ratio.
-    const [w, h] = this.options.aspectRatio.split(':').map(x => parseFloat(x));
-    this.ratio = [w, h, getDiagonal(w, h)];
-    // validate options.
-    const {width, height, diagonal} = this.options;
-    if (!width && !height && !diagonal) {
-      throw ReferenceError('At least one of width, height or diagonal must exist.');
-    }
-  }
-
   /**
    * Returns screen size data.
    *
@@ -103,6 +92,17 @@ export class ScreenSizeCalculator {
       diagonal: d,
       unit: unit || this.screenSize.unit,
     };
+  }
+
+  protected setProperties(): void {
+    // set aspect ratio.
+    const [w, h] = this.options.aspectRatio.split(':').map(x => parseFloat(x));
+    this.ratio = [w, h, getDiagonal(w, h)];
+    // validate options.
+    const {width, height, diagonal} = this.options;
+    if (!width && !height && !diagonal) {
+      throw ReferenceError('At least one of width, height or diagonal must exist.');
+    }
   }
 
   protected getScreenSizeFromDiagonal(diagonal: number): SizeValues {

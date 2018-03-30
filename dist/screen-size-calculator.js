@@ -134,16 +134,6 @@ var ScreenSizeCalculator = /** @class */ (function () {
             unit: this.options.unit,
         };
     };
-    ScreenSizeCalculator.prototype.setProperties = function () {
-        // set aspect ratio.
-        var _a = this.options.aspectRatio.split(':').map(function (x) { return parseFloat(x); }), w = _a[0], h = _a[1];
-        this.ratio = [w, h, Object(_util__WEBPACK_IMPORTED_MODULE_0__["getDiagonal"])(w, h)];
-        // validate options.
-        var _b = this.options, width = _b.width, height = _b.height, diagonal = _b.diagonal;
-        if (!width && !height && !diagonal) {
-            throw ReferenceError('At least one of width, height or diagonal must exist.');
-        }
-    };
     /**
      * Returns screen size data.
      *
@@ -175,6 +165,16 @@ var ScreenSizeCalculator = /** @class */ (function () {
             diagonal: d,
             unit: unit || this.screenSize.unit,
         };
+    };
+    ScreenSizeCalculator.prototype.setProperties = function () {
+        // set aspect ratio.
+        var _a = this.options.aspectRatio.split(':').map(function (x) { return parseFloat(x); }), w = _a[0], h = _a[1];
+        this.ratio = [w, h, Object(_util__WEBPACK_IMPORTED_MODULE_0__["getDiagonal"])(w, h)];
+        // validate options.
+        var _b = this.options, width = _b.width, height = _b.height, diagonal = _b.diagonal;
+        if (!width && !height && !diagonal) {
+            throw ReferenceError('At least one of width, height or diagonal must exist.');
+        }
     };
     ScreenSizeCalculator.prototype.getScreenSizeFromDiagonal = function (diagonal) {
         var _a = this.ratio, w = _a[0], h = _a[1], d = _a[2];

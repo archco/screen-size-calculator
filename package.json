@@ -1,16 +1,17 @@
 {
   "name": "screen-size-calculator",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "The javascript library class for calculating screen size.",
+  "main": "dist/screen-size-calculator.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "jest",
     "build": "webpack --hide-modules",
     "watch": "npm run build -- --watch"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "archcoster@gmail.com",
+  "license": "MIT",
   "devDependencies": {
     "@types/jest": "^22.2.2",
     "jest": "^22.4.3",
@@ -30,9 +31,7 @@
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
-      "tsx",
       "js",
-      "jsx",
       "json",
       "node"
     ],
