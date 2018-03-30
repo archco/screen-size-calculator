@@ -1,5 +1,4 @@
 import ScreenSizeCalculator from '../src/screen-size-calculator';
-import { decimal } from '../src/util';
 
 describe('#ScreenSizeCalculator', () => {
   describe('#constructor', () => {
@@ -19,25 +18,25 @@ describe('#ScreenSizeCalculator', () => {
     it('should works when given diagonal value.', () => {
       const ss = new ScreenSizeCalculator({ diagonal: 24 });
       const { width, height, diagonal } = ss.screenSize;
-      expect(decimal(width, 1)).toEqual(20.9);
-      expect(decimal(height, 1)).toEqual(11.8);
-      expect(decimal(diagonal, 1)).toEqual(24);
+      expect(diagonal).toBeCloseTo(24, 1);
+      expect(width).toBeCloseTo(20.9, 1);
+      expect(height).toBeCloseTo(11.8, 1);
     });
 
     it('should works when given width value.', () => {
       const ss = new ScreenSizeCalculator({ width: 10 });
       const { width, height, diagonal } = ss.screenSize;
-      expect(decimal(width, 1)).toEqual(10);
-      expect(decimal(height, 1)).toEqual(5.6);
-      expect(decimal(diagonal, 1)).toEqual(11.5);
+      expect(diagonal).toBeCloseTo(11.5, 1);
+      expect(width).toBeCloseTo(10, 1);
+      expect(height).toBeCloseTo(5.6, 1);
     });
 
     it('should works when given height value.', () => {
       const ss = new ScreenSizeCalculator({ height: 10 });
       const { width, height, diagonal } = ss.screenSize;
-      expect(decimal(width, 1)).toEqual(17.8);
-      expect(decimal(height, 1)).toEqual(10);
-      expect(decimal(diagonal, 1)).toEqual(20.4);
+      expect(diagonal).toBeCloseTo(20.4, 1);
+      expect(width).toBeCloseTo(17.8, 1);
+      expect(height).toBeCloseTo(10, 1);
     });
   });
 

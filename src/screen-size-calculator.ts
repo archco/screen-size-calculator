@@ -5,14 +5,20 @@ import {
   inchToCm,
 } from './util';
 
-export type AspectRatio = [number, number, number]; // width, height, diagonal
+/** width, height, diagonal */
+export type AspectRatio = [number, number, number];
+/** 'inch' or 'cm'. */
 export type Unit = 'inch'|'cm';
+/** width, height, diagonal */
+type SizeValues = [number, number, number];
 
 export interface Options {
   width?: number;
   height?: number;
   diagonal?: number;
+  /** The aspect ratio. e.g. '16:9', '4:3', '2.39:1' */
   aspectRatio?: string;
+  /** 'inch' or 'cm'. default is 'inch' */
   unit?: Unit;
 }
 
@@ -20,6 +26,7 @@ export interface ScreenSize {
   width: number;
   height: number;
   diagonal: number;
+  /** 'inch' or 'cm'. */
   unit: Unit;
 }
 
@@ -43,13 +50,21 @@ export class ScreenSizeCalculator {
   calculate(): ScreenSize {
     this.setProperties();
     const {width, height, diagonal} = this.options;
+    let size: SizeValues;
     if (diagonal) {
-      return this.getScreenSizeFromDiagonal(diagonal);
+      size = this.getScreenSizeFromDiagonal(diagonal);
     } else if (width) {
-      return this.getScreenSizeFromWidth(width);
+      size = this.getScreenSizeFromWidth(width);
     } else {
-      return this.getScreenSizeFromHeight(height);
+      size = this.getScreenSizeFromHeight(height);
     }
+    const [w, h, d] = size;
+    return {
+      width: w,
+      height: h,
+      diagonal: d,
+      unit: this.options.unit,
+    };
   }
 
   setProperties(): void {
@@ -63,6 +78,14 @@ export class ScreenSizeCalculator {
     }
   }
 
+  /**
+   * Returns screen size data.
+   *
+   * @param {Unit} [unit] 'inch' or 'cm'
+   * @param {number} [precision=2] precision of the float number.
+   * @returns {ScreenSize}
+   * @memberof ScreenSizeCalculator
+   */
   getData(unit?: Unit, precision: number = 2): ScreenSize {
     const { width, height, diagonal } = this.screenSize;
     const [w, h, d] = [width, height, diagonal].map(x => {
@@ -82,40 +105,25 @@ export class ScreenSizeCalculator {
     };
   }
 
-  protected getScreenSizeFromDiagonal(diagonal: number): ScreenSize {
+  protected getScreenSizeFromDiagonal(diagonal: number): SizeValues {
     const [w, h, d] = this.ratio;
     const width = diagonal * w / d;
     const height = diagonal * h / d;
-    return {
-      width,
-      height,
-      diagonal,
-      unit: this.options.unit,
-    };
+    return [width, height, diagonal];
   }
 
-  protected getScreenSizeFromWidth(width: number): ScreenSize {
+  protected getScreenSizeFromWidth(width: number): SizeValues {
     const [w, h, d] = this.ratio;
     const height = width * h / w;
     const diagonal = width * d / w;
-    return {
-      width,
-      height,
-      diagonal,
-      unit: this.options.unit,
-    };
+    return [width, height, diagonal];
   }
 
-  protected getScreenSizeFromHeight(height: number): ScreenSize {
+  protected getScreenSizeFromHeight(height: number): SizeValues {
     const [w, h, d] = this.ratio;
     const width = height * w / h;
     const diagonal = height * d / h;
-    return {
-      width,
-      height,
-      diagonal,
-      unit: this.options.unit,
-    };
+    return [width, height, diagonal];
   }
 }
 

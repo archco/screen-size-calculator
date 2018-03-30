@@ -15,7 +15,6 @@ describe('#inchToCm', () => {
 
 describe('#cmToInch', () => {
   it('works.', () => {
-    const inch = Util.cmToInch(61);
-    expect(Util.decimal(inch, 4)).toEqual(24.0157);
+    expect(Util.cmToInch(61)).toBeCloseTo(24.0157, 4);
   });
 });

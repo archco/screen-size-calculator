@@ -116,15 +116,23 @@ var ScreenSizeCalculator = /** @class */ (function () {
     ScreenSizeCalculator.prototype.calculate = function () {
         this.setProperties();
         var _a = this.options, width = _a.width, height = _a.height, diagonal = _a.diagonal;
+        var size;
         if (diagonal) {
-            return this.getScreenSizeFromDiagonal(diagonal);
+            size = this.getScreenSizeFromDiagonal(diagonal);
         }
         else if (width) {
-            return this.getScreenSizeFromWidth(width);
+            size = this.getScreenSizeFromWidth(width);
         }
         else {
-            return this.getScreenSizeFromHeight(height);
+            size = this.getScreenSizeFromHeight(height);
         }
+        var w = size[0], h = size[1], d = size[2];
+        return {
+            width: w,
+            height: h,
+            diagonal: d,
+            unit: this.options.unit,
+        };
     };
     ScreenSizeCalculator.prototype.setProperties = function () {
         // set aspect ratio.
@@ -136,6 +144,14 @@ var ScreenSizeCalculator = /** @class */ (function () {
             throw ReferenceError('At least one of width, height or diagonal must exist.');
         }
     };
+    /**
+     * Returns screen size data.
+     *
+     * @param {Unit} [unit] 'inch' or 'cm'
+     * @param {number} [precision=2] precision of the float number.
+     * @returns {ScreenSize}
+     * @memberof ScreenSizeCalculator
+     */
     ScreenSizeCalculator.prototype.getData = function (unit, precision) {
         var _this = this;
         if (precision === void 0) { precision = 2; }
@@ -164,34 +180,19 @@ var ScreenSizeCalculator = /** @class */ (function () {
         var _a = this.ratio, w = _a[0], h = _a[1], d = _a[2];
         var width = diagonal * w / d;
         var height = diagonal * h / d;
-        return {
-            width: width,
-            height: height,
-            diagonal: diagonal,
-            unit: this.options.unit,
-        };
+        return [width, height, diagonal];
     };
     ScreenSizeCalculator.prototype.getScreenSizeFromWidth = function (width) {
         var _a = this.ratio, w = _a[0], h = _a[1], d = _a[2];
         var height = width * h / w;
         var diagonal = width * d / w;
-        return {
-            width: width,
-            height: height,
-            diagonal: diagonal,
-            unit: this.options.unit,
-        };
+        return [width, height, diagonal];
     };
     ScreenSizeCalculator.prototype.getScreenSizeFromHeight = function (height) {
         var _a = this.ratio, w = _a[0], h = _a[1], d = _a[2];
         var width = height * w / h;
         var diagonal = height * d / h;
-        return {
-            width: width,
-            height: height,
-            diagonal: diagonal,
-            unit: this.options.unit,
-        };
+        return [width, height, diagonal];
     };
     return ScreenSizeCalculator;
 }());
